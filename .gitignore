@@ -1,0 +1,7 @@
+.env
+node_modules/
+data.txt
+estrutura_projeto.json
+mapeia.py
+query.sql
+migrate.js

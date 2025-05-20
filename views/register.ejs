@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Cadastro - Itinerário Pastoral</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      background-color: #f4f4f4;
+    }
+
+    .navbar {
+      height: 50px;
+      background-color: #007BFF;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      font-size: 1rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .nav-logo {
+      font-weight: bold;
+    }
+
+    .nav-links a {
+      color: white;
+      margin-left: 20px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: opacity 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      opacity: 0.8;
+    }
+
+    .container {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 40px;
+      padding: 20px;
+    }
+
+    .form-box {
+      background: #fff;
+      padding: 20px;
+      width: 40%;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .form-box h2 {
+      margin-top: 0;
+      margin-bottom: 16px;
+    }
+
+    .form-box input, .form-box select, .form-box button {
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 8px;
+      font-size: 0.9em;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+
+    .form-box button {
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    .form-box button:hover {
+      background-color: #0056b3;
+    }
+
+    .scroll-table {
+      max-height: 250px;
+      overflow-y: auto;
+      margin-top: 20px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      padding: 8px;
+      background-color: #fafafa;
+    }
+
+  .scroll-table table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .scroll-table th,
+  .scroll-table td {
+    text-align: left;
+    padding: 6px 8px;
+    border-bottom: 1px solid #ccc;
+  }
+
+  .scroll-table a {
+    text-decoration: none;
+    margin: 0 4px;
+}
+
+  </style>
+</head>
+<body>
+  <%- include('partials/nav') %>
+  <div class="container">
+  <!-- Formulário + Lista de Pastores -->
+  <div class="form-box">
+    <form method="POST" action="<%= editPastor ? '/register/pastores/edit/' + editPastor.id : '/register/pastores' %>">
+      <h2><%= editPastor ? 'Editar Pastor' : 'Cadastrar Pastor' %></h2>
+      <input type="text" name="nome" value="<%= editPastor ? editPastor.name : '' %>" placeholder="Nome do Pastor" required>
+      <input type="text" name="telefone" value="<%= editPastor ? editPastor.phone : '' %>" placeholder="Telefone (opcional)">
+      <input type="text" name="email" value="<%= editPastor ? editPastor.email : '' %>" placeholder="Email (opcional)">
+      <button type="submit"><%= editPastor ? 'Atualizar' : 'Salvar Pastor' %></button>
+    </form>
+
+
+    <div class="scroll-table">
+      <h3>Pastores Cadastrados</h3>
+      <table>
+        <thead>
+          <tr><th>Nome</th><th>Telefone</th><th>Email</th><th>Ações</th></tr>
+        </thead>
+        <tbody>
+          <% pastors.forEach(p => { %>
+            <tr>
+              <td><%= p.name %></td>
+              <td><%= p.phone %></td>
+              <td><%= p.email %></td>
+              <td>
+                <a href="/register/index?editPastorId=<%= p.id %>">✏️</a>
+                <a href="/register/pastores/delete/<%= p.id %>" onclick="return confirm('Excluir?')">❌</a>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Formulário + Lista de Igrejas -->
+  <div class="form-box">
+    <form method="POST" action="<%= editChurch ? '/register/igrejas/edit/' + editChurch.id : '/register/igrejas' %>">
+      <h2><%= editChurch ? 'Editar Igreja' : 'Cadastrar Igreja' %></h2>
+      <input type="text" name="nome" value="<%= editChurch ? editChurch.church_name : '' %>" placeholder="Nome da Igreja" required>
+      <input type="text" name="cidade" value="<%= editChurch ? editChurch.church_region : '' %>" placeholder="Região" required>
+      <button type="submit"><%= editChurch ? 'Atualizar' : 'Salvar Igreja' %></button>
+    </form>
+
+
+    <div class="scroll-table">
+      <h3>Igrejas Cadastradas</h3>
+      <table>
+        <thead>
+          <tr><th>Nome</th><th>Cidade</th><th>Ações</th></tr>
+        </thead>
+        <tbody>
+          <% churches.forEach(c => { %>
+            <tr>
+              <td><%= c.church_name %></td>
+              <td><%= c.church_region %></td>
+              <td>
+                <a href="/register/index?editChurchId=<%= c.id %>">✏️</a>
+                <a href="/register/igrejas/delete/<%= c.id %>" onclick="return confirm('Excluir?')">❌</a>
+              </td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

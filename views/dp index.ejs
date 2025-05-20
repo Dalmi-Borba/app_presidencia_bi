@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Itinerário Pastoral - MS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/main.min.css" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      overflow: hidden;
+      height: 100vh;
+    }
+    .container {
+      display: flex;
+      height: calc(100vh - 50px); /* subtrai a altura do navbar */
+      box-sizing: border-box;
+      margin-top: 50px; /* para alinhar visualmente */
+    }
+    .form {
+      width: 20%;
+      padding: 20px;
+      background-color: #f8f8f8;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .form h1 {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+    .form input, .form select, .form button {
+      margin: 4px 0;
+      padding: 8px;
+      font-size: 0.9em;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+    .form button {
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    #calendar {
+      flex: 1;
+      padding: 10px;
+      background: #fff;
+      border-left: 1px solid #ddd;
+    }
+    .fc-event-title {
+      font-size: 1.1em;
+      text-align: center;
+      color: black;
+    }
+    .navbar {
+      height: 50px;
+      background-color: #007BFF;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      font-size: 1rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .nav-logo {
+      font-weight: bold;
+      letter-spacing: 0.5px;
+    }
+    .nav-links a {
+      color: white;
+      margin-left: 20px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: opacity 0.2s ease;
+    }
+    .nav-links a:hover {
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+  <%- include('partials/nav') %>
+  <div class="container">
+    <form class="form" method="POST" action="/calendar/eventos/add">
+      <h1>Novo Evento</h1>
+      <input type="hidden" name="id" id="event-id">
+      <input type="text" name="title" id="title" placeholder="Nome do Evento" required>
+      <input type="date" name="date" id="date" required>
+      <select name="type" id="type" required>
+        <option value="visita">Visita</option>
+        <option value="reuniao">Reunião</option>
+        <option value="evento">Evento</option>
+        <option value="ferias">Férias</option>
+      </select>
+      <input type="text" name="pastor" id="pastor" list="pastores" placeholder="Pastor responsável" required>
+      <datalist id="pastores"></datalist>
+      <input type="text" name="church" id="church" list="igrejas" placeholder="Igreja ou Local" required>
+      <datalist id="igrejas"></datalist>
+      <div id="form-buttons">
+        <button type="submit" id="submit-btn">Adicionar</button>
+      </div>
+    </form>
+    <div id="calendar"></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const calendarEvents = <%- JSON.stringify(events) %>;
+      const storageKey = 'fcSelectedDate';
+
+      // aplica cores conforme tipo
+      calendarEvents.forEach(e => {
+        if (e.tipo === 'visita') {
+          e.backgroundColor = '#1abc9c';
+          e.borderColor = '#16a085';
+        } else if (e.tipo === 'reuniao') {
+          e.backgroundColor = '#3498db';
+          e.borderColor = '#2980b9';
+        } else if (e.tipo === 'evento') {
+          e.backgroundColor = '#e67e22';
+          e.borderColor = '#d35400';
+        } else if (e.tipo === 'ferias') {
+          e.backgroundColor = '#f4ff44';
+          e.borderColor = '#f4ff44'; 
+        }
+      });
+
+      // tenta ler a data salva, senão usa hoje
+      const savedDate = localStorage.getItem(storageKey);
+      const initialDate = savedDate || new Date().toISOString().slice(0,10);
+
+      const calendar = new FullCalendar.Calendar(document.getElementById('calendar'), {
+        initialView: 'dayGridWeek',
+        locale: 'pt-br',
+        height: '90%',
+        initialDate,
+        headerToolbar: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'dayGridMonth,dayGridWeek,dayGridDay,listWeek'
+        },
+        events: calendarEvents,
+
+        // sempre que a view muda salvamos a nova data inicial
+        datesSet: info => {
+          localStorage.setItem(storageKey, info.startStr);
+        },
+
+        eventContent: arg => {
+          const event = arg.event;
+          const div = document.createElement('div');
+          div.innerHTML = `
+            <strong class="fc-event-title">Pr: ${event.extendedProps.pastor}</strong><br>
+            <strong class="fc-event-title">Igreja: ${event.extendedProps.church}</strong>
+          `;
+          return { domNodes: [div] };
+        },
+
+        eventDidMount: info => {
+          info.el.title = 
+            `Evento: ${info.event.title}\n` +
+            `Pastor: ${info.event.extendedProps.pastor}\n` +
+            `Local: ${info.event.extendedProps.church}\n` +
+            `Tipo: ${info.event.extendedProps.tipo}`;
+        },
+
+        eventClick: info => {
+          const e = info.event;
+          document.getElementById('event-id').value = e.id;
+          document.getElementById('title').value = e.title;
+          document.getElementById('date').value = e.startStr;
+          document.getElementById('type').value = e.extendedProps.tipo;
+          document.getElementById('pastor').value = e.extendedProps.pastor;
+          document.getElementById('church').value = e.extendedProps.church;
+          document.getElementById('form-buttons').innerHTML = `
+            <button type="submit" id="submit-btn">Atualizar</button>
+            <button type="button" onclick="excluirEvento(${e.id})" style="background-color: #dc3545; margin-left:10px;">Excluir</button>
+            <button type="button" onclick="resetForm()" style="background-color: #6c757d; margin-left:10px;">Cancelar</button>
+          `;
+        }
+      });
+
+      // popula datalists
+      fetch('/register/api/pastores')
+        .then(res => res.json())
+        .then(data => {
+          const dl = document.getElementById('pastores');
+          dl.innerHTML = '';
+          data.forEach(name => {
+            const opt = document.createElement('option');
+            opt.value = name;
+            dl.appendChild(opt);
+          });
+        });
+
+      fetch('/register/api/igrejas')
+        .then(res => res.json())
+        .then(data => {
+          const dl = document.getElementById('igrejas');
+          dl.innerHTML = '';
+          data.forEach(name => {
+            const opt = document.createElement('option');
+            opt.value = name;
+            dl.appendChild(opt);
+          });
+        });
+
+      calendar.render();
+    });
+
+    function resetForm() {
+      document.getElementById('event-id').value = '';
+      document.getElementById('title').value = '';
+      document.getElementById('date').value = '';
+      document.getElementById('type').value = 'visita';
+      document.getElementById('pastor').value = '';
+      document.getElementById('church').value = '';
+      document.getElementById('form-buttons').innerHTML = `<button type="submit" id="submit-btn">Adicionar</button>`;
+    }
+
+    function excluirEvento(id) {
+      if (confirm('Tem certeza que deseja excluir este evento?')) {
+        window.location.href = `/calendar/eventos/delete/${id}`;
+      }
+    }
+  </script>
+</body>
+</html>
