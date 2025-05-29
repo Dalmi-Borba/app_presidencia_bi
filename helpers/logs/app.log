@@ -1,0 +1,30 @@
+{"level":30,"time":"2025-05-29T23:30:16.436Z","pid":22744,"hostname":"UCOB-ASM-NB-58","method":"GET","url":"/calendar/eventos/filter","msg":"Incoming request"}
+{"level":30,"time":"2025-05-29T23:30:23.209Z","pid":22744,"hostname":"UCOB-ASM-NB-58","method":"GET","url":"/calendar/index","msg":"Incoming request"}
+{"level":30,"time":"2025-05-29T23:30:28.206Z","pid":22744,"hostname":"UCOB-ASM-NB-58","method":"POST","url":"/calendar/eventos/add","body":{"date":"2025-05-22","type_envent":"Atendimento","pastor":"DALMI BORBA","church":"Alvorada","observation":""},"msg":"Incoming request"}
+{"level":30,"time":"2025-05-29T23:30:28.243Z","pid":22744,"hostname":"UCOB-ASM-NB-58","method":"GET","url":"/calendar/eventos/list","msg":"Incoming request"}
+{"level":30,"time":"2025-05-29T23:30:49.283Z","pid":22744,"hostname":"UCOB-ASM-NB-58","method":"GET","url":"/calendar/index","msg":"Incoming request"}
+{"level":30,"time":"2025-05-29T23:30:50.801Z","pid":22744,"hostname":"UCOB-ASM-NB-58","method":"GET","url":"/calendar/eventos/filter","msg":"Incoming request"}
+{"level":30,"time":"2025-05-29T23:30:54.025Z","pid":22744,"hostname":"UCOB-ASM-NB-58","method":"GET","url":"/calendar/eventos/filter","msg":"Incoming request"}
+{"level":30,"time":"2025-05-29T23:30:55.286Z","pid":22744,"hostname":"UCOB-ASM-NB-58","method":"GET","url":"/calendar/eventos/filter","msg":"Incoming request"}
+{"level":30,"time":"2025-05-29T23:31:01.748Z","pid":22744,"hostname":"UCOB-ASM-NB-58","method":"GET","url":"/calendar/eventos/filter","msg":"Incoming request"}
+{"level":30,"time":"2025-05-29T23:31:06.395Z","pid":22744,"hostname":"UCOB-ASM-NB-58","method":"POST","url":"/calendar/eventos/search","body":{"date":"2025-05-29","type_envent":"","pastor":"","church":"","observation":""},"msg":"Incoming request"}
+{"level":30,"time":"2025-05-29T23:31:22.784Z","pid":22744,"hostname":"UCOB-ASM-NB-58","method":"GET","url":"/calendar/eventos/delete/4","msg":"Incoming request"}
+{"level":30,"time":"2025-05-29T23:31:22.813Z","pid":22744,"hostname":"UCOB-ASM-NB-58","method":"GET","url":"/calendar/index","msg":"Incoming request"}
+{"level":30,"time":"2025-05-29T23:31:27.851Z","pid":22744,"hostname":"UCOB-ASM-NB-58","method":"GET","url":"/calendar/eventos/filter","msg":"Incoming request"}
+{"level":30,"time":"2025-05-29T23:31:33.001Z","pid":22744,"hostname":"UCOB-ASM-NB-58","method":"POST","url":"/calendar/eventos/search","body":{"date":"2025-05-29","type_envent":"","pastor":"","church":"","observation":""},"msg":"Incoming request"}
+{"level":30,"time":"2025-05-29T23:31:34.672Z","pid":22744,"hostname":"UCOB-ASM-NB-58","method":"GET","url":"/calendar/eventos/calendar","msg":"Incoming request"}
+{"level":30,"time":"2025-05-29T23:31:38.574Z","pid":22744,"hostname":"UCOB-ASM-NB-58","method":"GET","url":"/calendar/eventos/calendar","msg":"Incoming request"}
+{"level":30,"time":"2025-05-29T23:31:44.338Z","pid":22744,"hostname":"UCOB-ASM-NB-58","method":"GET","url":"/calendar/eventos/filter","msg":"Incoming request"}
+{"level":30,"time":"2025-05-29T23:31:47.663Z","pid":22744,"hostname":"UCOB-ASM-NB-58","method":"POST","url":"/calendar/eventos/search","body":{"date":"","type_envent":"","pastor":"DALMI BORBA","church":"","observation":""},"msg":"Incoming request"}
+{"level":30,"time":"2025-05-29T23:49:04.326Z","pid":32596,"hostname":"UCOB-ASM-NB-58","method":"GET","url":"/calendar/index"}
+{"level":30,"time":"2025-05-29T23:49:39.070Z","pid":15880,"hostname":"UCOB-ASM-NB-58","method":"GET","url":"/calendar/index"}
+{"level":30,"time":"2025-05-29T23:49:40.833Z","pid":15880,"hostname":"UCOB-ASM-NB-58","method":"GET","url":"/calendar/eventos/filter"}
+{"level":30,"time":"2025-05-29T23:49:42.807Z","pid":15880,"hostname":"UCOB-ASM-NB-58","method":"GET","url":"/calendar/eventos/calendar"}
+{"level":30,"time":"2025-05-29T23:49:49.321Z","pid":15880,"hostname":"UCOB-ASM-NB-58","method":"GET","url":"/calendar/index"}
+{"level":30,"time":"2025-05-29T23:52:50.680Z","pid":35996,"hostname":"UCOB-ASM-NB-58","method":"GET","url":"/calendar/index"}
+{"level":30,"time":"2025-05-29T23:53:48.514Z","pid":15984,"hostname":"UCOB-ASM-NB-58","method":"GET","url":"/calendar/index"}
+{"level":30,"time":"2025-05-29T23:53:57.232Z","pid":15984,"hostname":"UCOB-ASM-NB-58","method":"GET","url":"/calendar/index"}
+{"level":30,"time":"2025-05-29T23:53:58.117Z","pid":15984,"hostname":"UCOB-ASM-NB-58","method":"GET","url":"/calendar/eventos/filter"}
+{"level":30,"time":"2025-05-29T23:54:00.683Z","pid":15984,"hostname":"UCOB-ASM-NB-58","method":"GET","url":"/calendar/eventos/calendar"}
+{"level":30,"time":"2025-05-29T23:54:03.315Z","pid":15984,"hostname":"UCOB-ASM-NB-58","method":"GET","url":"/calendar/eventos/edit/5"}
+{"level":30,"time":"2025-05-29T23:55:02.271Z","pid":15984,"hostname":"UCOB-ASM-NB-58","method":"GET","url":"/calendar/index"}

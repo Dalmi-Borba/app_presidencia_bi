@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cadastrar Compromisso</title>
+  <link rel="icon" href="/logo.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="/index.css" />
+  <link rel="stylesheet" href="/nav.css" />
+  <link rel="stylesheet" href="/footer.css" />
+</head>
+<body>
+  <div class="container">
+    <h3>Exportar Itinerário</h3>
+      <form id="exportForm">
+            <label for="quarterSelect">Trimestre:</label>
+            <select id="quarterSelect" name="quarter">
+            <option value="1">1º</option>
+            <option value="2">2º</option>
+            <option value="3">3º</option>
+            <option value="4">4º</option>
+            </select>
+
+            <button type="submit">Gerar PDF</button>
+        </form>
+</div>
+  </div>
+  <%- include('partials/nav') %>
+</body>
+<script>
+  document
+    .getElementById('exportForm')
+    .addEventListener('submit', function(e) {
+      e.preventDefault();
+      // pega o ano atual do cliente
+      const year = new Date().getFullYear();
+      const quarter = this.quarter.value;
+      window.location.href = `/calendar/eventos/export/${year}/${quarter}`;
+    });
+</script>
+</html>

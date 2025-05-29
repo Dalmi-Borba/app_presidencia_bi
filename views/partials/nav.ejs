@@ -1,8 +1,27 @@
-  <nav class="navbar">
-    <div class="nav-logo">Itinerário Pastoral</div>
-    <div class="nav-links">
-      <a href="/calendar/index">Calendário</a>
-      <a href="/register/index">Cadastro</a>
-      <a href="#">Sair</a>
-    </div>
-  </nav>
+<footer class="fixed-footer">
+  <!-- links ocultos -->
+  <a href="/calendar/index" id="link-inicio" hidden></a>
+  <a href="/calendar/eventos/filter" id="link-filtrar" hidden></a>
+  <a href="/calendar/eventos/calendar" id="link-calendario" hidden></a>
+  <a href="/calendar/eventos/export" id="link-exportar" hidden></a>
+
+  <div>
+    <button type="button" data-target="link-inicio">Início</button>
+    <button type="button" data-target="link-filtrar">Filtros</button>
+    <button type="button" data-target="link-calendario">Calendário</button>
+    <% if (role === 'admin') { %>
+        <button type="button" data-target="link-exportar">Exportar</button>
+    <% } %>
+  </div>
+</footer>
+
+<script>
+  document
+    .querySelectorAll('.fixed-footer button[data-target]')
+    .forEach(btn => {
+      btn.addEventListener('click', () => {
+        const linkId = btn.dataset.target;
+        document.getElementById(linkId).click();
+      });
+    });
+</script>

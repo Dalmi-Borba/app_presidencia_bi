@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Itinerário ASM</title>
+  <link rel="icon" href="/logo.ico" type="image/x-icon" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/main.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/index.css" />
+  <link rel="stylesheet" href="/nav.css" />
+  <link rel="stylesheet" href="/footer.css" />
+  <style>
+    /* Modal */
+    .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 1000; }
+    .modal-content { background: #fff; padding: 1rem; border-radius: 0.5rem; width: 90%; max-width: 320px; position: relative; }
+    .modal-content .close { position: absolute; top: 8px; right: 12px; cursor: pointer; font-size: 1.2rem; }
+    .modal-content h3 { margin-top: 0; }
+    a { text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div id="calendar"></div>
+  </div>
+  <%- include('partials/nav') %>
+
+  <!-- Modal de Detalhes -->
+  <div id="event-modal" class="modal">
+    <div class="modal-content">
+      <span id="close-modal" class="close">&times;</span>
+      <h3 id="modal-title"></h3>
+      <p id="modal-date"></p>
+      <p id="modal-pastor"></p>
+      <p id="modal-church"></p>
+      <p id="modal-observacao"></p>
+      <p id="modal-type"></p>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const allEvents = <%- JSON.stringify(events) %>;
+      const selectedPastor = '';
+      const rawEvents = selectedPastor
+        ? allEvents.filter(e => e.pastor === selectedPastor)
+        : allEvents;
+
+      // Aplica cores por tipo
+      rawEvents.forEach(e => {
+        if (e.tipo === 'visita')      
+          { e.backgroundColor = '#1abc9c'; e.borderColor = '#16a085'; }
+        else if (e.tipo === 'reuniao'){ e.backgroundColor = '#3498db'; e.borderColor = '#2980b9'; }
+        else if (e.tipo === 'evento') { e.backgroundColor = '#e67e22'; e.borderColor = '#d35400'; }
+        else if (e.tipo === 'ferias'){ e.backgroundColor = '#f4ff44'; e.borderColor = '#f4ff44'; }
+      });
+
+      // Inicializa o calendário sempre no mês atual
+      const calendar = new FullCalendar.Calendar(
+        document.getElementById('calendar'),
+        {
+          initialView: 'dayGridMonth',
+          defaultDate: new Date(),
+          locale: 'pt-br',
+          headerToolbar: { left: 'prev,next', center: 'title', right: 'dayGridMonth,dayGridWeek,dayGridDay' },
+          contentHeight: '50vh',
+          events: rawEvents,
+          eventContent: ({ event }) => ({
+            html: `<div><strong>${event.extendedProps.pastor}</strong><br><small>${event.extendedProps.church}</small></div>`
+          }),
+          eventClick: info => {
+              // preenche campos…
+              document.getElementById('modal-title').textContent = info.event.extendedProps.type_envent;
+              document.getElementById('modal-date').textContent = info.event.startStr;
+              document.getElementById('modal-pastor').textContent = 'Obreiro(a): ' + info.event.extendedProps.pastor;
+              document.getElementById('modal-church').textContent = 'Distrito: ' + info.event.extendedProps.church;
+              document.getElementById('modal-observacao').textContent = 'Observação: ' + info.event.extendedProps.observation;
+
+              // *** criando o link de edição ***
+              const editLink = document.createElement('a');
+              editLink.href = `/calendar/eventos/edit/${info.event.id}`;
+              editLink.textContent = '✏️ Editar';
+              editLink.style.display = 'inline-block';
+              editLink.style.marginTop = '0.5rem';
+              editLink.id = 'edit-link';
+              
+              // anexe dentro do modal-content, por exemplo após o último <p>
+              let existingLinks = document.getElementById('edit-link');
+              if (!existingLinks) {
+                document.querySelector('#event-modal .modal-content').appendChild(editLink);
+              }
+              
+
+              const deleteLink = document.createElement('a');
+              deleteLink.href = `/calendar/eventos/delete/${info.event.id}`;
+              deleteLink.textContent = '❌ Excluir';
+              deleteLink.style.display = 'inline-block';
+              deleteLink.style.marginTop = '0.5rem';
+              deleteLink.id = 'delete-link';
+              deleteLink.onclick = function(e) {
+                if (!confirm('Tem certeza que deseja excluir este evento?')) {
+                  e.preventDefault();
+                }
+              };
+
+              let existingDeleteLinks = document.getElementById('delete-link');
+              if (!existingDeleteLinks) {
+                document.querySelector('#event-modal .modal-content').appendChild(deleteLink);
+              }
+              document.getElementById('event-modal').style.display = 'flex';
+          }
+
+        }
+      );
+
+      calendar.render();
+
+      // Fecha modal
+      document.getElementById('close-modal').addEventListener('click', () => {
+        document.getElementById('event-modal').style.display = 'none';
+      });
+      document.getElementById('event-modal').addEventListener('click', e => {
+        if (e.target.id === 'event-modal') {
+          document.getElementById('event-modal').style.display = 'none';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

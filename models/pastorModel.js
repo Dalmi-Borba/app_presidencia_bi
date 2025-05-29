@@ -1,5 +1,14 @@
-const sqlite3 = require('sqlite3').verbose();
-const path = require('path');
+//const sqlite3 = require('sqlite3').verbose();
+//const path = require('path');
+//const db = new sqlite3.Database(path.join(__dirname, '../database/calendar.sqlite'));
+import sqlite3 from 'sqlite3';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 const db = new sqlite3.Database(path.join(__dirname, '../database/calendar.sqlite'));
 
 db.serialize(() => {
@@ -11,7 +20,7 @@ db.serialize(() => {
   )`);
 });
 
-exports.insertPastor = (name, phone, email) => {
+export function insertPastor(name, phone, email) {
   return new Promise((resolve, reject) => {
     db.run(
       `INSERT INTO pastors (name, phone, email) VALUES (?, ?, ?)`,
@@ -24,7 +33,7 @@ exports.insertPastor = (name, phone, email) => {
   });
 };
 
-exports.getAll = () => {
+export function getAll() {
   return new Promise((resolve, reject) => {
     db.all(`SELECT name FROM pastors ORDER BY name`, [], (err, rows) => {
       if (err) reject(err);
@@ -33,7 +42,7 @@ exports.getAll = () => {
   });
 };
 
-exports.getAllWithId = () => {
+export function getAllWithId() {
   return new Promise((resolve, reject) => {
     db.all(`SELECT id, name, phone, email FROM pastors ORDER BY name`, [], (err, rows) => {
       if (err) reject(err);
@@ -42,7 +51,7 @@ exports.getAllWithId = () => {
   });
 };
 
-exports.deleteById = (id) => {
+export function deleteById(id) {
   return new Promise((resolve, reject) => {
     db.run(`DELETE FROM pastors WHERE id = ?`, [id], function(err) {
       if (err) reject(err);
@@ -51,7 +60,7 @@ exports.deleteById = (id) => {
   });
 };
 
-exports.findById = (id) => {
+export function findById(id) {
   return new Promise((resolve, reject) => {
     db.get(`SELECT * FROM pastors WHERE id = ?`, [id], (err, row) => {
       if (err) reject(err);
@@ -60,7 +69,7 @@ exports.findById = (id) => {
   });
 };
 
-exports.updateById = (id, nome, telefone, email) => {
+export function updateById(id, nome, telefone, email) {
   return new Promise((resolve, reject) => {
     db.run(
       `UPDATE pastors SET name = ?, phone = ?, email = ? WHERE id = ?`,

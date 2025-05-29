@@ -11,15 +11,13 @@
 </head>
 <body>
   <div class="container">
-    <div class="header">
-       <h3>Olá, <%= user %>! <a href="/logout">Logout</a></h3>
-    </div>
-    <form class="form" method="POST" action="/calendar/eventos/add">
-      <h1>Cadastrar Compromisso</h1>
+    <form class="form" method="POST" action="/calendar/eventos/search">
+      <h1>Buscar Compromissos</h1>
       <label for="date">Data:</label>
-      <input type="date" name="date" id="date" required>
+      <input type="date" name="date" id="date">
       <label for="type">Tipo:</label>
-      <select name="type_envent" id="type_envent" required>
+      <select name="type_envent" id="type_envent">
+        <option value=""></option>
         <option value="Atendimento">Atendimento</option>
         <option value="Pregação">Pregação</option>
         <option value="Família">Família</option>
@@ -28,8 +26,8 @@
         <option value="Educação">Educação</option>
       </select>
       <label for="pastor">Obreiro(a):</label>
-      <select name="pastor" id="pastor" required>
-        <option value="<%= user %>" selected><%= user %></option>
+      <select name="pastor" id="pastor">
+        <option value=""></option>
         <% pastors.forEach(name_pastor => { %>
           <option value="<%= name_pastor %>"
             <%= pastors === name_pastor ? 'selected' : '' %>>
@@ -38,8 +36,8 @@
         <% }) %>
       </select>
       <label for="church">Local:</label>
-        <select name="church" id="church" required>
-          <option value="" disabled>Selecione o local</option>
+        <select name="church" id="church">
+          <option value=""></option>
           <% churches.forEach(name_church => { %>
             <option value="<%= name_church %>"
               <%= churches === name_church ? 'selected' : '' %>>
@@ -49,7 +47,7 @@
         </select>
       <input type="text" name="observation" id="observation" placeholder="Observação" />
       <div id="form-buttons">
-        <button type="submit" id="submit-btn">Adicionar</button>
+        <button type="submit" id="submit-btn">Buscar</button>
       </div>
     </form>
   </div>

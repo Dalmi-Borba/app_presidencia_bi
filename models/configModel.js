@@ -1,5 +1,14 @@
-const sqlite3 = require('sqlite3').verbose();
-const db = new sqlite3.Database('./database/database.sqlite');
+//const sqlite3 = require('sqlite3').verbose();
+//const db = new sqlite3.Database('./database/database.sqlite');
+import sqlite3 from 'sqlite3';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const db = new sqlite3.Database(path.join(__dirname, '../database/calendar.sqlite'));
 
 db.serialize(() => {
   db.run(`CREATE TABLE IF NOT EXISTS users (
@@ -9,7 +18,7 @@ db.serialize(() => {
   )`);
 });
 
-exports.getAllUsers = () => {
+export function getAllUsers() {
   return new Promise((resolve, reject) => {
     db.all("SELECT * FROM users", [], (err, rows) => {
       if (err) {
@@ -21,7 +30,7 @@ exports.getAllUsers = () => {
   });
 };
 
-exports.getUserById = (id) => {
+export function getUserById(id) {
   return new Promise((resolve, reject) => {
     db.get("SELECT * FROM users WHERE id = ?", [id], (err, row) => {
       if (err) {
@@ -33,7 +42,7 @@ exports.getUserById = (id) => {
   });
 };
 
-exports.addUser = (user) => {
+export function addUser(user) {
   return new Promise((resolve, reject) => {
     const stmt = db.prepare("INSERT INTO users (name, email) VALUES (?, ?)");
     stmt.run([user.name, user.email], function(err) {
@@ -47,7 +56,7 @@ exports.addUser = (user) => {
   });
 };
 
-exports.updateUser = (id, user) => {
+export function updateUser(id, user) {
   return new Promise((resolve, reject) => {
     const stmt = db.prepare("UPDATE users SET name = ?, email = ? WHERE id = ?");
     stmt.run([user.name, user.email, id], function(err) {
@@ -61,7 +70,7 @@ exports.updateUser = (id, user) => {
   });
 };
 
-exports.deleteUser = (id) => {
+export function deleteUser(id) {
   return new Promise((resolve, reject) => {
     const stmt = db.prepare("DELETE FROM users WHERE id = ?");
     stmt.run(id, function(err) {
