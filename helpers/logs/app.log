@@ -364,3 +364,5 @@
 {"level":30,"time":"2025-05-30T14:16:55.970Z","pid":33780,"hostname":"UCOB-ASM-NB-58","method":"GET","url":"/"}
 {"level":30,"time":"2025-05-30T14:16:58.668Z","pid":33780,"hostname":"UCOB-ASM-NB-58","method":"GET","url":"/calendar/filter"}
 {"level":30,"time":"2025-05-30T14:17:00.335Z","pid":33780,"hostname":"UCOB-ASM-NB-58","method":"GET","url":"/calendar/calendar"}
+{"level":30,"time":"2025-05-30T15:59:29.178Z","pid":28860,"hostname":"UCOB-ASM-NB-58","method":"GET","url":"/api/visits-city"}
+{"level":30,"time":"2025-05-30T16:01:43.024Z","pid":28860,"hostname":"UCOB-ASM-NB-58","method":"GET","url":"/"}

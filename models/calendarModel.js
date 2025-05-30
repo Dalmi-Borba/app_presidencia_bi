@@ -4,11 +4,13 @@ import sqlite3 from 'sqlite3';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const db = new sqlite3.Database(path.join(__dirname, '../database/calendar.sqlite'));
+const db = new sqlite3.Database(path.join(__dirname, process.env.DB_PATH));
 
 db.serialize(() => {
   db.run(`CREATE TABLE IF NOT EXISTS eventos (
@@ -104,13 +106,13 @@ export function getVisitsByRegion(startDate, endDate) {
 export function getVisitsByCity(startDate, endDate) {
   return new Promise((res, rej) => {
     db.all(
-      `SELECT igreja AS city,
+      `SELECT church,
               COUNT(*) AS count,
-              MAX(data) AS last_visit
+              MAX(date) AS last_visit
        FROM eventos
-       WHERE tipo = 'visita'
-         AND data BETWEEN ? AND ?
-       GROUP BY igreja`,
+       WHERE type_envent IN ('Atendimento','Pregação')
+         AND date BETWEEN ? AND ?
+       GROUP BY church`,
       [startDate, endDate],
       (err, rows) => err ? rej(err) : res(rows)
     );

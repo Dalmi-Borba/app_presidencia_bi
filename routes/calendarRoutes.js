@@ -50,7 +50,7 @@ router.use((req, res, next) => {
     meta.body = req.body;
   }
 
-  logger.info(meta);
+  //logger.info(meta);
   next();
 });
 
