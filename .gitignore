@@ -6,3 +6,4 @@ estrutura_projeto.json
 mapeia.py
 query.sql
 migrate.js
+helpers/logs
