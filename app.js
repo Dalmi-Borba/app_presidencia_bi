@@ -39,7 +39,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Rotas
 app.use('/config', configRoutes);
-app.use('/calendar', calendarRoutes);
+app.use('/', calendarRoutes);
 app.use('/register', registerRoutes);
 
 // Inicialização do servidor

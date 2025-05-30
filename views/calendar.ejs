@@ -78,7 +78,7 @@
 
               // *** criando o link de edição ***
               const editLink = document.createElement('a');
-              editLink.href = `/calendar/eventos/edit/${info.event.id}`;
+              editLink.href = `/calendar/edit/${info.event.id}`;
               editLink.textContent = '✏️ Editar';
               editLink.style.display = 'inline-block';
               editLink.style.marginTop = '0.5rem';
@@ -92,7 +92,7 @@
               
 
               const deleteLink = document.createElement('a');
-              deleteLink.href = `/calendar/eventos/delete/${info.event.id}`;
+              deleteLink.href = `/calendar/delete/${info.event.id}`;
               deleteLink.textContent = '❌ Excluir';
               deleteLink.style.display = 'inline-block';
               deleteLink.style.marginTop = '0.5rem';

@@ -44,7 +44,7 @@ export async function createCalendar(req, res) {
       await insertEvent(date, pastor, church, type_envent, observation);
     }
 
-    res.redirect('/calendar/eventos/list');
+    res.redirect('/calendar/list');
   } catch (err) {
     res.status(500).send("Erro ao salvar evento: " + err.message);
   }
@@ -54,7 +54,7 @@ export async function deleteEvent(req, res) {
   const id = req.params.id;
   try {
     await deleteEventById(id);
-    res.redirect('/calendar/index');
+    res.redirect('/');
   } catch (err) {
     res.status(500).send("Erro ao excluir evento: " + err.message);
   }
@@ -136,7 +136,7 @@ export async function updateCalendar(req, res) {
   try {
       await updateEventById(id, date, pastor, church, type_envent, observation);
 
-      res.redirect('/calendar/index');
+      res.redirect('/');
     
   } catch (err) {
     res.status(500).send("Erro ao salvar evento: " + err.message);
@@ -233,7 +233,7 @@ export async function exportQuarterlyReport(req, res) {
     doc.font('Helvetica-Bold').fontSize(10);
     let xPos = marginLeft;
     Object.entries(colWidths).forEach(([key, width], i) => {
-      const label = ['Data','Obreiro(a)','Distrito','Tipo','Observação'][i];
+      const label = ['Data','Obreiro(a)','Distrito','Itinerário','Observação'][i];
       doc
         .rect(xPos, tableTop - 2, width, rowHeight)
         .fillOpacity(0.1)

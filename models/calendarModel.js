@@ -61,7 +61,7 @@ export function insertEvent(date, pastor, church, type_envent, observation) {
 export function updateEventById(id, date, pastor, church, type_envent, observation) {
   return new Promise((resolve, reject) => {
     db.run(
-      `UPDATE eventos SET titulo = ?, data = ?, pastor = ?, church = ?, type_envent = ?, observation = ? WHERE id = ?`,
+      `UPDATE eventos SET date = ?, pastor = ?, church = ?, type_envent = ?, observation = ? WHERE id = ?`,
       [date, pastor, church, type_envent, observation, id],
       function (err) {
         if (err) reject(err);

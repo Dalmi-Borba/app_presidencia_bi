@@ -55,16 +55,17 @@ router.use((req, res, next) => {
 });
 
 
-router.get('/index', renderIndex);
-router.get('/eventos/list', listCalendar);
-router.get('/eventos/calendar', calendar);
-router.get('/eventos/edit/:id', calendarEdit);
-router.get('/eventos/filter', filterCalendar);
-router.get('/eventos/export/:year/:quarter', exportQuarterlyReport);
-router.post('/eventos/add', createCalendar);
-router.get('/eventos/export', exportCalendar);
-router.post('/eventos/search', searchCalendar);
-//router.post('/eventos/update', updateCalendar);
+router.get('/', renderIndex);
+router.get('/calendar/list', listCalendar);
+router.get('/calendar/calendar', calendar);
+router.get('/calendar/edit/:id', calendarEdit);
+router.get('/calendar/filter', filterCalendar);
+router.get('/calendar/export/:year/:quarter', exportQuarterlyReport);
+router.get('/calendar/export', exportCalendar);
+router.get('/calendar/search', searchCalendar);
+router.post('/calendar/add', createCalendar);
+router.get('/calendar/delete/:id', deleteEvent);
+router.post('/calendar/search', searchCalendar);
 router.get('/eventos/delete/:id', deleteEvent);
 router.get('/api/visits-region', visitsByRegion);
 router.get('/api/visits-city', visitsByCity);
