@@ -39,7 +39,7 @@
       </select>
       <label for="church">Local:</label>
         <select name="church" id="church">
-          <option value="" disabled>Selecione o local</option>
+          <option value=""></option>
           <% churches.forEach(name_church => { %>
             <option value="<%= name_church %>"
               <%= churches === name_church ? 'selected' : '' %>>
