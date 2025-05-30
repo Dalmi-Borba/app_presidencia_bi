@@ -1,4 +1,5 @@
 .env
+.env.prod
 node_modules/
 data.txt
 estrutura_projeto.json

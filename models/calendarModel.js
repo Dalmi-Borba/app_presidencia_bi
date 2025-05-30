@@ -15,7 +15,7 @@ db.serialize(() => {
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     date TEXT NOT NULL,
     pastor TEXT NOT NULL,
-    church TEXT NOT NULL,
+    church TEXT,
     type_envent TEXT NOT NULL,
     observation TEXT
   )`);
