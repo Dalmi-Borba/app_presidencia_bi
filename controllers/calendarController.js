@@ -32,7 +32,7 @@ export async function renderIndex(req, res) {
 
 export async function createCalendar(req, res) {
   const { id, date, type_envent, pastor, church, observation } = req.body;
-  console.log(req.body);
+  
   if (!date || !type_envent || !pastor) {
     return res.status(400).send("Campos obrigatórios não preenchidos.");
   }

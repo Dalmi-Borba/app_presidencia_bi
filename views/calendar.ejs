@@ -48,11 +48,13 @@
 
       // Aplica cores por tipo
       rawEvents.forEach(e => {
-        if (e.tipo === 'visita')      
+        if (e.type_envent === 'Atendimento')
           { e.backgroundColor = '#1abc9c'; e.borderColor = '#16a085'; }
-        else if (e.tipo === 'reuniao'){ e.backgroundColor = '#3498db'; e.borderColor = '#2980b9'; }
-        else if (e.tipo === 'evento') { e.backgroundColor = '#e67e22'; e.borderColor = '#d35400'; }
-        else if (e.tipo === 'ferias'){ e.backgroundColor = '#f4ff44'; e.borderColor = '#f4ff44'; }
+        else if (e.type_envent === 'Reunião'){ e.backgroundColor = '#3498db'; e.borderColor = '#2980b9'; }
+        else if (e.type_envent === 'Família') { e.backgroundColor = '#e67e22'; e.borderColor = '#d35400'; }
+        else if (e.type_envent === 'Férias'){ e.backgroundColor = '#7F55B1'; e.borderColor = '#7F55B1'; }
+        else if (e.type_envent === 'Pregação'){ e.backgroundColor = '#DA6C6C'; e.borderColor = '#DA6C6C'; }
+        else if (e.type_envent === 'Educação'){ e.backgroundColor = '#27548A'; e.borderColor = '#27548A'; }
       });
 
       // Inicializa o calendário sempre no mês atual
@@ -63,10 +65,10 @@
           defaultDate: new Date(),
           locale: 'pt-br',
           headerToolbar: { left: 'prev,next', center: 'title', right: 'dayGridMonth,dayGridWeek,dayGridDay' },
-          contentHeight: '50vh',
+          contentHeight: '100vh',
           events: rawEvents,
           eventContent: ({ event }) => ({
-            html: `<div><strong>${event.extendedProps.pastor}</strong><br><small>${event.extendedProps.church}</small></div>`
+            html: `<div><b>${event.extendedProps.pastor}</b><br><b>${event.extendedProps.church}</b><b>${event.extendedProps.type_envent}</b></div>`
           }),
           eventClick: info => {
               // preenche campos…
@@ -82,6 +84,7 @@
               editLink.textContent = '✏️ Editar';
               editLink.style.display = 'inline-block';
               editLink.style.marginTop = '0.5rem';
+              editLink.style.marginRight = '2rem';
               editLink.id = 'edit-link';
               
               // anexe dentro do modal-content, por exemplo após o último <p>

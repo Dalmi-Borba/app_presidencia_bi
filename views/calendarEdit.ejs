@@ -11,14 +11,14 @@
 <body>
   <div class="container">
     <form class="form" method="POST" action="/calendar/add">
-      <h1>Cadastrar Compromisso</h1>
+      <h1>Editar Compromisso</h1>
       <input type="hidden" name="id" id="event-id" value="<%= event.id %>" />
       <%
           const iso = event.date.split('T')[0];
           const [y, m, d] = iso.split('-');
           const dataFormatted = `${d}/${m}/${y}`;   
       %>
-      <label for="date">Data atual: <%= dataFormatted %></label>
+      <label for="date">Data atual: <span style="color: red;"><%= dataFormatted %></span></label>
       <input type="date" name="date" id="date" required>
       <select name="type_envent" id="type" required>
         <option value="Atendimento">Atendimento</option>
@@ -39,7 +39,7 @@
       </select>
       <label for="church">Local:</label>
         <select name="church" id="church">
-          <option value=""></option>
+          <option value="<%= event.church ? event.church : '' %>"><%= event.church ? event.church : '' %></option>
           <% churches.forEach(name_church => { %>
             <option value="<%= name_church %>"
               <%= churches === name_church ? 'selected' : '' %>>
